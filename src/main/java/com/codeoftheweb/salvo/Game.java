@@ -3,9 +3,7 @@ package com.codeoftheweb.salvo;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Game {
@@ -48,4 +46,16 @@ public class Game {
     public void setGameStart(Date gameStart) {
         this.gameStart = gameStart;
     }
+
+   public List<GamePlayerDto> makeGamePlayerDto(){
+        List<GamePlayerDto> gamePlayerDtos = new ArrayList<>();
+        for(GamePlayer gamePlayer: gamePlayers){
+            Player player = gamePlayer.getPlayer();
+            PlayerDto playerDto = new PlayerDto(player.getId(), player.getUserName());
+            GamePlayerDto gamePlayerDto = new GamePlayerDto(gamePlayer.getId(), playerDto);
+            gamePlayerDtos.add(gamePlayerDto);
+        }
+        return gamePlayerDtos;
+   }
+
 }

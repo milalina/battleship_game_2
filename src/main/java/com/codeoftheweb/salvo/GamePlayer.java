@@ -3,7 +3,7 @@ package com.codeoftheweb.salvo;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 public class GamePlayer {
@@ -18,6 +18,8 @@ public class GamePlayer {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="game_id")
     private Game game;
+    @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
+    Set<Ship> ships = new HashSet<>();
 
     public Game getGame() {
         return game;
@@ -35,6 +37,15 @@ public class GamePlayer {
         this.player = player;
         this.game =game;
         this.date=date;
+    }
+
+    public void setShips(Set<Ship> ships) {
+        this.ships = ships;
+    }
+
+    public void addShip(Ship ship) {
+        ship.setGamePlayer(this);
+        ships.add(ship);
     }
 
     public long getId() {
@@ -59,5 +70,26 @@ public class GamePlayer {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public List<ShipDto> createShipDtos(){
+        List<ShipDto> shipDtos = new ArrayList<>();
+        for(Ship ship: ships){
+            ShipDto myShipDto = new ShipDto(ship.getShipType(), ship.getShipLocation());
+            shipDtos.add(myShipDto);
+        }
+       return shipDtos;
+    }
+
+    public GamePlayer getOpponent(){
+       Set<GamePlayer> gamePlayers = new HashSet<>();
+       gamePlayers.addAll(this.getGame().getGamePlayers());
+      GamePlayer opponent = new GamePlayer();
+       for (GamePlayer gamePlayer: gamePlayers){
+           if(this.getId()!= gamePlayer.getId()){
+               gamePlayer=opponent;
+           } else{return null;}
+       }
+        return opponent;
     }
 }

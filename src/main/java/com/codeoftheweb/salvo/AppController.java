@@ -12,7 +12,7 @@ import java.util.*;
 public class AppController {
     private GameRepository gameRepository;
     private GamePlayerRepository gamePlayerRepository;
-   // private SalvoRepository salvoRepository;
+    private SalvoRepository salvoRepository;
       private ShipRepository shipRepository;
    // private ScoreRepository scoreRepository;
     private PlayerRepository playerRepository;
@@ -20,13 +20,13 @@ public class AppController {
     @Autowired //tells to create an instance of 'Repository' and store it in the instance variable 'repository'
     //private PlayerRepository playerRepository;
     public AppController(GameRepository gameRepository, GamePlayerRepository gamePlayerRepository,
-                         ShipRepository shipRepository, /*SalvoRepository
-            salvoRepository,  ScoreRepository scoreRepository,*/
+                         ShipRepository shipRepository, SalvoRepository
+            salvoRepository,  /*ScoreRepository scoreRepository,*/
                          PlayerRepository playerRepository) {
         this.gameRepository = gameRepository;
         this.gamePlayerRepository = gamePlayerRepository;
         this.shipRepository = shipRepository;
-       // this.salvoRepository = salvoRepository;
+        this.salvoRepository = salvoRepository;
        // this.scoreRepository = scoreRepository;
        // this.playerRepository = playerRepository;
     }
@@ -53,7 +53,7 @@ public class AppController {
         gameViewDto.put("id", game.getId());
         gameViewDto.put("created", game.getGameStart());
         gameViewDto.put("gamePlayers", game.makeGamePlayerDto());
-        gameViewDto.put("ships", gamePlayer.createShipDtos());
+        gameViewDto.put("ships", gamePlayer.createShipsDto());
         return gameViewDto;
     }
 

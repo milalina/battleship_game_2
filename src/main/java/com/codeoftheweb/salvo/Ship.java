@@ -14,7 +14,7 @@ public class Ship {
     private long id;
     private String shipType;
     @ElementCollection
-    @Column(name="email")
+    @Column(name="ship")
     private List<String> shipLocation = new ArrayList<>();
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="gamePlayer_id")

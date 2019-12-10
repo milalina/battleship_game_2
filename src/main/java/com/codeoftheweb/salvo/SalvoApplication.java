@@ -17,7 +17,8 @@ public class SalvoApplication {
 	}
 	@Bean
 	public CommandLineRunner initData(PlayerRepository playerRepository, GameRepository gameRepository,
-                                      GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository) {
+                                      GamePlayerRepository gamePlayerRepository, ShipRepository shipRepository,
+                                      SalvoRepository salvoRepository) {
 		return (args) -> {
 
 			Player player1 = new Player("j.bauer@ctu.gov");
@@ -79,6 +80,27 @@ public class SalvoApplication {
             gamePlayer5.addShip(ship11);
             gamePlayer6.addShip(ship12);
 
+            Date turn1 = new Date();
+            Date turn2 = new Date();
+
+            List<String> salvoLocations1=Arrays.asList("B5", "C5", "F1");
+            List<String> salvoLocations2=Arrays.asList("B4", "B5", "B6");
+            List<String> salvoLocations3=Arrays.asList("F2", "D5");
+            List<String> salvoLocations4=Arrays.asList("E1", "H3", "A2");
+            List<String> salvoLocations5=Arrays.asList("E1", "H3", "A2");
+
+            Salvo salvo1= new Salvo(turn1, salvoLocations1);
+            Salvo salvo2= new Salvo(turn1, salvoLocations2);
+            Salvo salvo3= new Salvo(turn2, salvoLocations3);
+            Salvo salvo4= new Salvo(turn2, salvoLocations4);
+            Salvo salvo5= new Salvo(turn1, salvoLocations5);
+
+            gamePlayer1.addSalvo(salvo1);
+            gamePlayer1.addSalvo(salvo3);
+            gamePlayer2.addSalvo(salvo2);
+            gamePlayer2.addSalvo(salvo4);
+            gamePlayer3.addSalvo(salvo5);
+
 			playerRepository.save(player1);
 			playerRepository.save(player2);
 			playerRepository.save(player3);
@@ -95,6 +117,12 @@ public class SalvoApplication {
             gamePlayerRepository.save(gamePlayer5);
             gamePlayerRepository.save(gamePlayer6);
 
+            salvoRepository.save(salvo1);
+            salvoRepository.save(salvo2);
+            salvoRepository.save(salvo3);
+            salvoRepository.save(salvo4);
+            salvoRepository.save(salvo5);
+
             shipRepository.save(ship1);
             shipRepository.save(ship2);
             shipRepository.save(ship3);
@@ -107,6 +135,8 @@ public class SalvoApplication {
             shipRepository.save(ship10);
             shipRepository.save(ship11);
             shipRepository.save(ship12);
+
+
 		};
 	}
 }

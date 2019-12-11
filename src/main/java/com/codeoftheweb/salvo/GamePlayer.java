@@ -21,13 +21,13 @@ public class GamePlayer {
     @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
     Set<Ship> ships = new HashSet<>();
     @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
-    List<Salvo> salvoes = new ArrayList<>();
+    Set<Salvo> salvoes = new HashSet<>();
 
     public Set<Ship> getShips() {
         return ships;
     }
 
-    public List<Salvo> getSalvoes() {
+    public Set<Salvo> getSalvoes() {
         return salvoes;
     }
 
@@ -96,14 +96,23 @@ public class GamePlayer {
        return shipDtos;
     }
 
+    public List<SalvoDto> createSalvoDto(){
+        List<SalvoDto> mySalvoDtoList= new ArrayList<>();
+        int counter=1;
+        for(Salvo salvo: salvoes){
+            SalvoDto mySalvoDto= new SalvoDto(salvo.getSalvoLocations(), salvo.getHitsInThisTurn(), counter++);
+            mySalvoDtoList.add(mySalvoDto);
+        }
+        return mySalvoDtoList;
+    }
+
     public GamePlayer getOpponent(){
-       Set<GamePlayer> gamePlayers = new HashSet<>();
-       gamePlayers.addAll(this.getGame().getGamePlayers());
+       Set<GamePlayer> gamePlayers = this.getGame().getGamePlayers();
       GamePlayer opponent = new GamePlayer();
        for (GamePlayer gamePlayer: gamePlayers){
            if(this.getId()!= gamePlayer.getId()){
                gamePlayer=opponent;
-           } else{return null;}
+           }
        }
         return opponent;
     }

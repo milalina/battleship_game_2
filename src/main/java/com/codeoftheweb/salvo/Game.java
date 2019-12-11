@@ -52,7 +52,7 @@ public class Game {
         for(GamePlayer gamePlayer: gamePlayers){
             Player player = gamePlayer.getPlayer();
             PlayerDto playerDto = new PlayerDto(player.getId(), player.getUserName());
-            GamePlayerDto gamePlayerDto = new GamePlayerDto(gamePlayer.getId(), playerDto);
+            GamePlayerDto gamePlayerDto = new GamePlayerDto(gamePlayer.getId(), playerDto, gamePlayer.createSalvoDto());
             gamePlayerDtos.add(gamePlayerDto);
         }
         return gamePlayerDtos;

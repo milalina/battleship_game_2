@@ -92,17 +92,21 @@ public class Salvo {
     public List<String> opponentSalvoThisTurnAsString(){
         GamePlayer myGamePlayer = this.getGamePlayer();
         GamePlayer myOpponent=myGamePlayer.getOpponent();
-        List<Salvo> mySalvoAllTurns=myGamePlayer.getSalvoes();
-        List<Salvo> opponentSalvoAllTurns = myOpponent.getSalvoes();
-        if( mySalvoAllTurns.size()==opponentSalvoAllTurns.size()){
-            List<String> opponentSalvoThisTurn= new ArrayList<>();
-            for(Salvo salvo: opponentSalvoAllTurns){
-                if(this.getTurnNumber()==salvo.getTurnNumber()){
-                    opponentSalvoThisTurn.addAll(salvo.getSalvoLocations());
-                }
-            }return opponentSalvoThisTurn;
+        if(myOpponent!=null){
+            Set<Salvo> mySalvoAllTurns=myGamePlayer.getSalvoes();
+            Set<Salvo> opponentSalvoAllTurns = myOpponent.getSalvoes();
+            if(opponentSalvoAllTurns!=null){
+                if( mySalvoAllTurns.size()==opponentSalvoAllTurns.size()){
+                    List<String> opponentSalvoThisTurn= new ArrayList<>();
+                    for(Salvo salvo: opponentSalvoAllTurns){
+                        if(this.getTurnNumber()==salvo.getTurnNumber()){
+                            opponentSalvoThisTurn.addAll(salvo.getSalvoLocations());
+                        }
+                    }return opponentSalvoThisTurn;
+                }else{return null;}
+            }else{return null;}
         }else{return null;}
-        }
+    }
 
         List<String> getHitsInThisTurn(){
         List<String> myShips=this.getMyShipsLocationsAsString();

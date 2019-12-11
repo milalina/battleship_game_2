@@ -54,6 +54,7 @@ public class AppController {
         gameViewDto.put("created", game.getGameStart());
         gameViewDto.put("gamePlayers", game.makeGamePlayerDto());
         gameViewDto.put("ships", gamePlayer.createShipsDto());
+       // gameViewDto.put("salvoes", gamePlayer.createSalvoDto());
         return gameViewDto;
     }
 
